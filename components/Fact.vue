@@ -20,8 +20,8 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 2rem;
-  color: #35495e;
+  font-size: 1.125rem;
+  color: #000;
   letter-spacing: 1px;
 }
 </style>

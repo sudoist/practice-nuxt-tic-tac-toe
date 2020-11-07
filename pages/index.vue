@@ -26,19 +26,19 @@
         This started as a Vue.js technical exam but I went and tested out
         Nuxt.js as well.
       </h4>
-      <h4>
+      <h4 class="mt-3 text-lg">
         Original app can be viewed at
         <a class="text-blue-700" href="https://codepen.io/sudoist/pen/VwjGrbL">
           https://codepen.io/sudoist/pen/VwjGrbL
         </a>
       </h4>
-      <p class="mt-3">
-        Below is a random component to show a random fact on page load from
+      <h4 class="my-3 text-xl font-bold">
+        Below is a random component to show a random fact every page load from
         <a class="text-blue-700" href="https://uselessfacts.jsph.pl/">
           https://uselessfacts.jsph.pl/
         </a>
         to practice API fetch.
-      </p>
+      </h4>
       <Fact />
     </div>
   </div>
