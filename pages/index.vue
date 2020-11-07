@@ -2,6 +2,7 @@
   <div class="container">
     <div>
       <Logo />
+      <Fact />
       <h1 class="title">practice-nuxt-tic-tac-toe</h1>
       <div class="links">
         <a
@@ -26,7 +27,10 @@
 </template>
 
 <script>
-export default {}
+import Fact from '../components/Fact'
+export default {
+  components: { Fact },
+}
 </script>
 
 <style>
