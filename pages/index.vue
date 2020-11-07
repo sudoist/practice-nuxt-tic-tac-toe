@@ -2,7 +2,6 @@
   <div class="container">
     <div>
       <Logo />
-      <Fact />
       <h1 class="title">practice-nuxt-tic-tac-toe</h1>
       <div class="links">
         <a
@@ -22,12 +21,26 @@
           GitHub
         </a>
       </div>
+      <h4>
+        This started as a Vue.js technical exam but I went and tested out
+        Nuxt.js as well. Original app can be viewed at
+        <a href="https://codepen.io/sudoist/pen/VwjGrbL"></a>
+      </h4>
+      <p>
+        Here is a random component to show some random facts on page load from
+        <a href="https://uselessfacts.jsph.pl/">
+          https://uselessfacts.jsph.pl/
+        </a>
+        to practice API fetch.
+      </p>
+      <Fact />
     </div>
   </div>
 </template>
 
 <script>
 import Fact from '../components/Fact'
+
 export default {
   components: { Fact },
 }
