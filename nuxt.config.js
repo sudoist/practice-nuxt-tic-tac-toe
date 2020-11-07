@@ -54,6 +54,6 @@ export default {
   build: {},
 
   server: {
-    port: 4000, // default: 3000
+    port: 3030, // default: 3000, need to change when server has multiple node apps to prevent port conflict.
   }
 }

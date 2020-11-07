@@ -88,3 +88,6 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# pm2 multiple node apps config
+ecosystem.config.js

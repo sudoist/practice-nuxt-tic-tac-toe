@@ -1,0 +1,19 @@
+module.exports = {
+  apps: [
+    {
+      name: 'nuxt',
+      exec_mode: 'cluster',
+      instances: 'max', // Max or a number of instances
+      script: './node_modules/nuxt/bin/nuxt.js',
+      args: 'start'
+    },
+    {
+      name: 'express',
+      script: 'path/to/express/api/bin/www', // express project folder/bin/www
+      cwd: 'path/to/express/api', // express project folder
+      args: 'start',
+      node_args: '--require dotenv/config', // Include this to fix issue that dotenv variables are empty
+    }
+  ]
+}
+
