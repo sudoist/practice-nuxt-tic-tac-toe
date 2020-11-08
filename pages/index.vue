@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container p-8">
     <div>
       <Logo />
       <h1 class="text-3xl title">practice-nuxt-tic-tac-toe</h1>

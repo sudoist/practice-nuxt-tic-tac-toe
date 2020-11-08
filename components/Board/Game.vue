@@ -232,7 +232,8 @@ export default {
 </script>
 
 <style>
-.status {
+.status,
+.square {
   font-family: 'Press Start 2P', cursive;
 }
 
