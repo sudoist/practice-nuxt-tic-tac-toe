@@ -50,15 +50,16 @@ export default {
       ],
     }
   },
-  mounted() {
-    // console.log(this.conditions)
-  },
   methods: {
     play(row, button) {
       const selected = {}
       selected[row.toString() + button.toString()] = this.player
-
       this.turns.push(selected)
+
+      this.markButton(row, button)
+      this.assignTurn()
+    },
+    markButton(row, button) {
       document.getElementById(
         row.toString() + button.toString()
       ).textContent = this.player
@@ -68,10 +69,9 @@ export default {
       document
         .getElementById(row.toString() + button.toString())
         .classList.add('bg-green-400')
-
-      this.didPlayerWin()
-
-      if (!this.gameOver) {
+    },
+    assignTurn() {
+      if (!this.didPlayerWin()) {
         if (this.player === 'X') {
           this.player = 'O'
           this.status = 'CURRENT PLAYER: O'
@@ -82,23 +82,21 @@ export default {
       }
     },
     didPlayerWin() {
-      const player = this.player
-      const turns = this.turns
-      const winConditions = this.winConditions
-      const boxes = this.boxes
       let playerTurns = []
 
-      if (turns.length > 4) {
-        playerTurns = this.getPlayedTurns(turns, player)
+      if (this.turns.length > 4) {
+        playerTurns = this.getPlayedTurns(this.turns, this.player)
 
         // Check if player wins
-        this.matchWinConditions(winConditions, playerTurns, player)
+        this.matchWinConditions(this.winConditions, playerTurns, this.player)
 
         // Can't get watch to work for gameOver
         if (this.gameOver) {
-          this.disableGame(boxes)
+          this.disableGame(this.boxes)
+          return true
         }
       }
+      return false
     },
     disableGame(boxes) {
       for (let index = 0; index < boxes.length; index++) {
@@ -118,15 +116,15 @@ export default {
       }
     },
     getPlayedTurns(turns, player) {
-      const playerTurns = []
+      const playedTurns = []
       Object.keys(turns).forEach(function (item) {
         Object.keys(turns[item]).forEach(function (value, key) {
           if (turns[item][value] === player) {
-            playerTurns.push(value)
+            playedTurns.push(value)
           }
         })
       })
-      return playerTurns
+      return playedTurns
     },
     isMatchingWinCondition(arr, arr2) {
       return arr.every((i) => arr2.includes(i))
@@ -137,95 +135,20 @@ export default {
       this.turns = []
       this.gameOver = false
       this.win = null
-      document.getElementById('11').textContent = ''
-      document
-        .getElementById('11')
-        .insertAdjacentHTML(
-          'beforeend',
-          '<span class="text-green-200">.</span>'
-        )
-      document.getElementById('11').removeAttribute('disabled')
-      document.getElementById('11').classList.remove('bg-green-400')
 
-      document.getElementById('12').textContent = ''
-      document
-        .getElementById('12')
-        .insertAdjacentHTML(
-          'beforeend',
-          '<span class="text-green-200">.</span>'
-        )
-      document.getElementById('12').removeAttribute('disabled')
-      document.getElementById('12').classList.remove('bg-green-400')
-
-      document.getElementById('13').textContent = ''
-      document
-        .getElementById('13')
-        .insertAdjacentHTML(
-          'beforeend',
-          '<span class="text-green-200">.</span>'
-        )
-      document.getElementById('13').removeAttribute('disabled')
-      document.getElementById('13').classList.remove('bg-green-400')
-
-      document.getElementById('21').textContent = ''
-      document
-        .getElementById('21')
-        .insertAdjacentHTML(
-          'beforeend',
-          '<span class="text-green-200">.</span>'
-        )
-      document.getElementById('21').removeAttribute('disabled')
-      document.getElementById('21').classList.remove('bg-green-400')
-
-      document.getElementById('22').textContent = ''
-      document
-        .getElementById('22')
-        .insertAdjacentHTML(
-          'beforeend',
-          '<span class="text-green-200">.</span>'
-        )
-      document.getElementById('22').removeAttribute('disabled')
-      document.getElementById('22').classList.remove('bg-green-400')
-
-      document.getElementById('23').textContent = ''
-      document
-        .getElementById('23')
-        .insertAdjacentHTML(
-          'beforeend',
-          '<span class="text-green-200">.</span>'
-        )
-      document.getElementById('23').removeAttribute('disabled')
-      document.getElementById('23').classList.remove('bg-green-400')
-
-      document.getElementById('31').textContent = ''
-      document
-        .getElementById('31')
-        .insertAdjacentHTML(
-          'beforeend',
-          '<span class="text-green-200">.</span>'
-        )
-      document.getElementById('31').removeAttribute('disabled')
-      document.getElementById('31').classList.remove('bg-green-400')
-
-      document.getElementById('32').textContent = ''
-      document
-        .getElementById('32')
-        .insertAdjacentHTML(
-          'beforeend',
-          '<span class="text-green-200">.</span>'
-        )
-      document.getElementById('32').removeAttribute('disabled')
-      document.getElementById('32').classList.remove('bg-green-400')
-
-      document.getElementById('33').textContent = ''
-      document
-        .getElementById('33')
-        .insertAdjacentHTML(
-          'beforeend',
-          '<span class="text-green-200">.</span>'
-        )
-      document.getElementById('33').removeAttribute('disabled')
-      document.getElementById('33').classList.remove('bg-green-400')
+      for (let index = 0; index < this.boxes.length; index++) {
+        document.getElementById(this.boxes[index]).textContent = ''
+        document
+          .getElementById(this.boxes[index])
+          .insertAdjacentHTML(
+            'beforeend',
+            '<span class="text-green-200">.</span>'
+          )
+        document.getElementById(this.boxes[index]).removeAttribute('disabled')
+        document
+          .getElementById(this.boxes[index])
+          .classList.remove('bg-green-400')
+      }
     },
   },
 }
