@@ -31,12 +31,27 @@ export default {
       win: '',
       status: 'CURRENT PLAYER: X',
       player: 'X',
+      playerTurns: [],
       box: {
         current: [],
       },
+      boxes: ['11', '12', '13', '21', '22', '23', '31', '32', '33'],
       turns: [],
       gameOver: false,
+      winConditions: [
+        ['11', '12', '13'],
+        ['21', '22', '23'],
+        ['31', '32', '33'],
+        ['11', '21', '31'],
+        ['12', '22', '32'],
+        ['13', '23', '33'],
+        ['11', '22', '33'],
+        ['13', '22', '31'],
+      ],
     }
+  },
+  mounted() {
+    // console.log(this.conditions)
   },
   methods: {
     play(row, button) {
@@ -67,21 +82,43 @@ export default {
       }
     },
     didPlayerWin() {
-      if (this.turns.length > 4) {
-        this.winConditions(this.player)
+      const player = this.player
+      const turns = this.turns
+      const winConditions = this.winConditions
+      const boxes = this.boxes
+      let playerTurns = []
+
+      if (turns.length > 4) {
+        playerTurns = this.getPlayedTurns(turns, player)
+
+        // Check if player wins
+        this.matchWinConditions(winConditions, playerTurns, player)
+
+        // Can't get watch to work for gameOver
+        if (this.gameOver) {
+          this.disableGame(boxes)
+        }
       }
     },
-    winConditions(player) {
-      const condition1 = ['11', '12', '13']
-      const condition2 = ['21', '22', '23']
-      const condition3 = ['31', '32', '33']
-      const condition4 = ['11', '21', '31']
-      const condition5 = ['12', '22', '32']
-      const condition6 = ['13', '23', '33']
-      const condition7 = ['11', '22', '33']
-      const condition8 = ['13', '22', '31']
+    disableGame(boxes) {
+      for (let index = 0; index < boxes.length; index++) {
+        document
+          .getElementById(boxes[index])
+          .setAttribute('disabled', 'disabled')
+      }
+    },
+    matchWinConditions(winConditions, playerTurns, player) {
+      for (let index = 0; index < winConditions.length; index++) {
+        if (
+          this.isMatchingWinCondition(winConditions[index], playerTurns.sort())
+        ) {
+          this.win = player + ' WIN!'
+          this.gameOver = true
+        }
+      }
+    },
+    getPlayedTurns(turns, player) {
       const playerTurns = []
-      const turns = this.turns
       Object.keys(turns).forEach(function (item) {
         Object.keys(turns[item]).forEach(function (value, key) {
           if (turns[item][value] === player) {
@@ -89,59 +126,7 @@ export default {
           }
         })
       })
-
-      // Check if player wins
-      if (this.isMatchingWinCondition(condition1, playerTurns.sort())) {
-        this.win = player + ' WIN!'
-        this.gameOver = true
-      }
-
-      if (this.isMatchingWinCondition(condition2, playerTurns.sort())) {
-        this.win = player + ' WIN!'
-        this.gameOver = true
-      }
-
-      if (this.isMatchingWinCondition(condition3, playerTurns.sort())) {
-        this.win = player + ' WIN!'
-        this.gameOver = true
-      }
-
-      if (this.isMatchingWinCondition(condition4, playerTurns.sort())) {
-        this.win = player + ' WIN!'
-        this.gameOver = true
-      }
-
-      if (this.isMatchingWinCondition(condition5, playerTurns.sort())) {
-        this.win = player + ' WIN!'
-        this.gameOver = true
-      }
-
-      if (this.isMatchingWinCondition(condition6, playerTurns.sort())) {
-        this.win = player + ' WIN!'
-        this.gameOver = true
-      }
-
-      if (this.isMatchingWinCondition(condition7, playerTurns.sort())) {
-        this.win = player + ' WIN!'
-        this.gameOver = true
-      }
-
-      if (this.isMatchingWinCondition(condition8, playerTurns.sort())) {
-        this.win = player + ' WIN!'
-        this.gameOver = true
-      }
-
-      if (this.gameOver) {
-        document.getElementById('11').setAttribute('disabled', 'disabled')
-        document.getElementById('12').setAttribute('disabled', 'disabled')
-        document.getElementById('13').setAttribute('disabled', 'disabled')
-        document.getElementById('21').setAttribute('disabled', 'disabled')
-        document.getElementById('22').setAttribute('disabled', 'disabled')
-        document.getElementById('23').setAttribute('disabled', 'disabled')
-        document.getElementById('31').setAttribute('disabled', 'disabled')
-        document.getElementById('32').setAttribute('disabled', 'disabled')
-        document.getElementById('33').setAttribute('disabled', 'disabled')
-      }
+      return playerTurns
     },
     isMatchingWinCondition(arr, arr2) {
       return arr.every((i) => arr2.includes(i))
