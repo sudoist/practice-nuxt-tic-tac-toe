@@ -1,6 +1,8 @@
 # practice-nuxt-tic-tac-toe
 Practicing Nuxt and Vue in this simple tic tac toe project.
 
+## Up for a few rounds of ~~gwent~~ [tic tac toe](https://tictacvue.tigasoft.dev/)?
+
 ## Build Setup
 
 ```bash
